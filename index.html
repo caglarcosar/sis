@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayı Sistemi Oyunu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .question {
+            font-size: 24px;
+            margin: 20px;
+        }
+        .input-box {
+            padding: 10px;
+            font-size: 18px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .result {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sayı Sistemi Öğrenme Oyunu</h1>
+    <p>Bu oyunda, size bir onluk sayı verilmiş olacak. Onu ikilik (binary) sistemine çevireceksiniz.</p>
+
+    <div class="question" id="question">Bir soru gelecek...</div>
+
+    <input type="text" id="answer" class="input-box" placeholder="Cevabınızı buraya yazın...">
+    <button class="button" onclick="checkAnswer()">Cevabı Kontrol Et</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        // Rastgele bir onluk sayı oluşturuyoruz.
+        let currentNumber;
+
+        function generateQuestion() {
+            currentNumber = Math.floor(Math.random() * 100);  // 0 ile 100 arasında rastgele bir sayı
+            document.getElementById("question").textContent = `Onluk sistemdeki sayı: ${currentNumber}`;
+        }
+
+        // Kullanıcı cevabını kontrol etmek
+        function checkAnswer() {
+            const userAnswer = document.getElementById("answer").value;
+            const correctAnswer = currentNumber.toString(2);  // Sayıyı ikilik sisteme çevir
+
+            if (userAnswer === correctAnswer) {
+                document.getElementById("result").textContent = "Tebrikler! Doğru cevap!";
+            } else {
+                document.getElementById("result").textContent = `Yanlış cevap. Doğru cevap: ${correctAnswer}`;
+            }
+
+            // Yeni soru oluşturuyoruz.
+            setTimeout(() => {
+                generateQuestion();
+                document.getElementById("answer").value = '';
+                document.getElementById("result").textContent = '';
+            }, 2000);
+        }
+
+        // Sayfa yüklendiğinde ilk soruyu oluştur
+        window.onload = generateQuestion;
+    </script>
+</body>
+</html>
